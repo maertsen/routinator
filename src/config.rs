@@ -2562,8 +2562,8 @@ fn facility_to_string(facility: Facility) -> String {
 
 //============ Tests =========================================================
 
-#[cfg(test)]
-mod test {
+#[cfg(any(fuzzing, test))]
+pub mod test {
     use super::*;
 
     fn get_default_config() -> Config {
@@ -2572,7 +2572,7 @@ mod test {
         Config::default()
     }
 
-    fn process_basic_args(args: &[&str]) -> Config {
+    pub fn process_basic_args(args: &[&str]) -> Config {
         let mut config = get_default_config();
         config.apply_arg_matches(
             &Config::config_args(Command::new("routinator"))
@@ -2582,7 +2582,7 @@ mod test {
         config
     }
 
-    fn process_server_args(args: &[&str]) -> Config {
+    pub fn process_server_args(args: &[&str]) -> Config {
         let mut config = get_default_config();
         let matches = Config::server_args(Config::config_args(
                 Command::new("routinator"))
